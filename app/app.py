@@ -49,7 +49,7 @@ def callback():
 #this will create an account for new users, do nothing for existing users
 def logIn(uid, fname, lname):
     cursor = conn.cursor()
-    cursor.execute("INSERT OR IGNORE INTO User (uid, fname, lname) VALUES (?, ?, ?)", (3, "fname", "lname"))
+    cursor.execute("INSERT OR IGNORE INTO User (uid, fname, lname) VALUES (?, ?, ?)", (uid, fname, lname))
     conn.commit()
     if cursor.rowcount == 1:
         print("User added successfully")
