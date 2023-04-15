@@ -1,0 +1,29 @@
+body {
+
+    background: linear-gradient(to bottom right, rgb(55, 1, 55), rgb(4, 4, 49), rgb(84, 4, 4));
+    min-height: 100vh;
+    text-align: center;
+    font-size: calc(10px + 2vmin);
+    font-family: "Courier New";
+    color: white;
+    
+}
+
+th, td{
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.gtable {
+    display: flex;
+    justify-content: center;
+    text-align: left;
+    margin: 0 auto;
+  }
+  
+
+button{
+    bottom: 0%
+}
