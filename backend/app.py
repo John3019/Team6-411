@@ -31,8 +31,20 @@ auth_headers = {
     'redirect_uri': redirect_uri
 }
 
+
+# global statics post-login
+auth_code = ''
+access_token = ''
+endpoint_url = ''
+headers = {}
+
 # Static authorization URL
 AUTH_URL = "https://accounts.spotify.com/authorize?" + urlencode(auth_headers)
+
+# Initialize Flask-Login
+login_manager = LoginManager()
+login_manager.init_app(app)
+
 
 @app.route('/', methods=['GET'])
 def home():
@@ -41,8 +53,26 @@ def home():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
-        webbrowser.open_new(AUTH_URL)
+        webbrowser.open(AUTH_URL)
         return redirect(AUTH_URL)
+    else:
+        pass
+
+@app.route('/getTopFiveSongs', methods=['GET', 'POST'])
+def getTopFiveSongs():
+    if request.method == 'GET':
+        response = requests.get('https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit=5', headers=headers)
+        response_json = response.json()
+        return jsonify(response_json)
+    else:
+        pass
+
+@app.route('/getTopFiveArtists', methods=['GET', 'POST'])
+def getTopFiveArtists():
+   if request.method == 'GET':
+        response = requests.get('https://api.spotify.com/v1/me/top/artists?limit=5', headers=headers)
+        response_json = response.json()
+        return jsonify(response_json)
     else:
         pass
 
@@ -55,7 +85,7 @@ def callback():
         auth_headers = {'Content-Type': 'application/x-www-form-urlencoded'}
         auth_code = str(args.get('code'))
         
-        # Set up the data for the POST reques
+        # Set up the data for the POST request
         auth_data = {
             'grant_type': 'authorization_code',
             'code': auth_code,
@@ -81,7 +111,6 @@ def callback():
         # Step 4: Send GET request and retrieve respons
         response = requests.get(endpoint_url, headers=headers)
         response_json = json.loads(response.text)
-        print(response_json)
         top_track_name = str(response_json['items'][0]['name'])
 
         
