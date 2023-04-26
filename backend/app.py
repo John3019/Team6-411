@@ -5,6 +5,10 @@ from dotenv import load_dotenv
 import os, webbrowser
 from flask_cors import CORS
 
+#sqllite connection
+import sqlite3   
+conn = sqlite3.connect('data.db', check_same_thread=False)  
+print("Opened database") 
 
 load_dotenv()
 
@@ -84,19 +88,84 @@ def callback():
         print(response_json)
         top_track_name = str(response_json['items'][0]['name'])
 
-        
+
 
         return f'''
         <h1> Logged In! </h1>
 
         <h2> Here is your top song: {top_track_name} </h2>
         '''
-
+    
         # get user id, name
-
+        
         # insert into the database here
+        #logIn(uid,fname,lname)
     else:
         pass
+
+#this will create an account for new users, do nothing for existing users
+def logIn(uid, fname, lname):
+    cursor = conn.cursor()
+    cursor.execute("INSERT OR IGNORE INTO User (uid, fname, lname) VALUES (?, ?, ?)", (uid, fname, lname))
+    conn.commit()
+    if cursor.rowcount == 1:
+        print("User added successfully")
+        return True
+    else:
+        print("User already exists")
+        return False
+    
+#if user wants to join group, will ignore if already in group
+def joingroup(gid, uid):
+    cursor = conn.cursor()
+    cursor.execute("INSERT or IGNORE INTO Membership(gid, uid) VALUES (?, ?)", (gid, uid))
+    #call function that would generate new g_link with the new member here
+    #in that new function be sure to call update g link
+    conn.commit()
+
+#Creates new group adds creating user to the group right away
+#have g_link (link to blended playlist) prepared to call this
+def newgroup(gname, uid, g_link):
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO Lgroup(gname, g_link) VALUES (?,?)", (gname, g_link))
+    conn.commit()
+    lastGID = cursor.lastrowid
+    print("group created")
+
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO Membership(gid, uid) VALUES (?, ?)", (lastGID, uid))
+    conn.commit()
+    print ("user added to their group")  
+
+#list of group members in this group
+def groupmems(gid):
+    cursor = conn.cursor()
+    cursor.execute("SELECT uid FROM Membership WHERE gid = ?", (gid,))
+    groupIDls = cursor.fetchall()
+    return list(zip(*groupIDls))[0]
+
+#list of groups this user belongs to 
+#format: [(gid, gname, g_link), (gid,gname, g_link),....]
+def mygroups(uid):
+    cursor = conn.cursor()
+    cursor.execute("SELECT Lgroup.gid, Lgroup.gname, Lgroup.g_link FROM Membership JOIN Lgroup ON Membership.gid = Lgroup.gid WHERE uid= ?", (uid,))
+    mygroups= cursor.fetchall()
+    return mygroups
+
+def update_g_link(gid, g_link):
+    print("gid", gid)
+    print("glink", g_link)
+    cursor = conn.cursor()
+    cursor.execute("UPDATE Lgroup SET g_link = ? WHERE gid = ?", (g_link, gid,))
+    conn.commit()
+
+#query to search for user based on fname/lname 
+#format: [(uid,fname,lname),(..),(..)]
+def search_user(fname, lname):
+    cursor = conn.cursor()
+    cursor.execute("SELECT uid,fname,lname FROM User WHERE fname = ? AND lname =?", (fname,lname))
+    matched_users= cursor.fetchall()
+    return matched_users
 
 if __name__ == '__main__':
     app.run()
