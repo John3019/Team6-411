@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Search.css';
-
+import './button-2.css';
 
 export default function Search() {
    
@@ -27,7 +27,14 @@ export default function Search() {
           <ul style={{ listStyleType: "none" }}>
             {groups && groups.map((group) => (
                     <li key={group[0]}>
-                       <h2><a href={group[2]}>{group[1]}</a></h2>
+                      <div>
+                        <h2 style={{ display: "inline-block" }}>
+                            <a href={group[2]}>{group[1]}</a>
+                        </h2>
+                        <button class="button-2" style={{ display: "inline-block" }}>
+                            Join
+                        </button>
+                        </div>
                     </li>
             ))}
           </ul>
@@ -78,7 +85,7 @@ export default function Search() {
 
 
       }
-    //to build the button below I used html/css inspo from  https://www.w3schools.com/howto/howto_css_search_button.asp 
+    //to build the search bars below I used html/css inspo from  https://www.w3schools.com/howto/howto_css_search_button.asp 
     //!!!!!need to add hyper link to user search result to redirect to their profile page
     return (
         <body>
@@ -98,8 +105,10 @@ export default function Search() {
             
            
     
-      
-       
+            <div class="button-container">
+                <button className="button-2" type="button">Back to Profile</button>
+            </div>
+        
 
         </body>
  

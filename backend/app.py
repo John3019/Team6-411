@@ -168,6 +168,7 @@ def update_t5artists(uid, newt5):
     cursor.execute("UPDATE User SET t5artists = ? WHERE uid = ?", (newt5, uid,))
     conn.commit()
 
+#this is for the GPT generation
 def update_aiGeneration(uid, newG):
     cursor = conn.cursor()
     cursor.execute("UPDATE User SET aiGeneration = ? WHERE uid = ?", (newG, uid,))
