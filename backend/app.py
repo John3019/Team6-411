@@ -88,7 +88,9 @@ def callback():
         print(response_json)
         top_track_name = str(response_json['items'][0]['name'])
 
-
+        # get user id, name
+        # insert into the database here
+        #logIn(uid,fname,lname)
 
         return f'''
         <h1> Logged In! </h1>
@@ -96,10 +98,7 @@ def callback():
         <h2> Here is your top song: {top_track_name} </h2>
         '''
     
-        # get user id, name
         
-        # insert into the database here
-        #logIn(uid,fname,lname)
     else:
         pass
 
@@ -119,7 +118,7 @@ def logIn(uid, fname, lname):
 def joingroup(gid, uid):
     cursor = conn.cursor()
     cursor.execute("INSERT or IGNORE INTO Membership(gid, uid) VALUES (?, ?)", (gid, uid))
-    #call function that would generate new g_link with the new member here
+    #!!! call function that would generate new g_link with the new member here
     #in that new function be sure to call update g link
     conn.commit()
 
@@ -152,12 +151,39 @@ def mygroups(uid):
     mygroups= cursor.fetchall()
     return mygroups
 
+
 def update_g_link(gid, g_link):
-    print("gid", gid)
-    print("glink", g_link)
     cursor = conn.cursor()
     cursor.execute("UPDATE Lgroup SET g_link = ? WHERE gid = ?", (g_link, gid,))
     conn.commit()
+
+#update spotify stat's w these v at every log in
+def update_t5songs(uid, newt5):
+    cursor = conn.cursor()
+    cursor.execute("UPDATE User SET t5songs = ? WHERE uid = ?", (newt5, uid,))
+    conn.commit()
+
+def update_t5artists(uid, newt5):
+    cursor = conn.cursor()
+    cursor.execute("UPDATE User SET t5artists = ? WHERE uid = ?", (newt5, uid,))
+    conn.commit()
+
+def update_aiGeneration(uid, newG):
+    cursor = conn.cursor()
+    cursor.execute("UPDATE User SET aiGeneration = ? WHERE uid = ?", (newG, uid,))
+    conn.commit()
+
+def update_t5tracks(uid, newt5):
+    cursor = conn.cursor()
+    cursor.execute("UPDATE User SET t5tracks = ? WHERE uid = ?", (newt5, uid,))
+    conn.commit()
+
+def update_mins(uid, newMins):
+    cursor = conn.cursor()
+    cursor.execute("UPDATE User SET minutes = ? WHERE uid = ?", (newMins, uid,))
+    conn.commit()
+
+
 
 #query to search for user based on fname 
 #(all matches will appear fname needs to be exact (case sensitive))
