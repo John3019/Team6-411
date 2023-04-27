@@ -159,13 +159,23 @@ def update_g_link(gid, g_link):
     cursor.execute("UPDATE Lgroup SET g_link = ? WHERE gid = ?", (g_link, gid,))
     conn.commit()
 
-#query to search for user based on fname/lname 
-#format: [(uid,fname,lname),(..),(..)]
-def search_user(fname, lname):
+#query to search for user based on fname 
+#(all matches will appear fname needs to be exact (case sensitive))
+#ret format: [(uid,fname,lname),(..),(..)]
+@app.route('/search_user/<fname>', methods=['POST'])
+def search_user(fname):
     cursor = conn.cursor()
-    cursor.execute("SELECT uid,fname,lname FROM User WHERE fname = ? AND lname =?", (fname,lname))
+    cursor.execute("SELECT uid,fname,lname FROM User WHERE fname = ?", (fname,))
     matched_users= cursor.fetchall()
     return matched_users
 
+#query to search for group based on gname (case sensitive)
+#ret format: [(gid,gname,g_link),(..),(..)]
+@app.route('/search_group/<gname>', methods=['POST'])
+def search_group(gname):
+     cursor = conn.cursor()
+     cursor.execute("SELECT gid,gname,g_link FROM LGroup WHERE gname = ?", (gname,))
+     matched_groups= cursor.fetchall()
+     return matched_groups
 if __name__ == '__main__':
     app.run()

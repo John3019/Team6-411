@@ -1,0 +1,68 @@
+body {
+
+    background: linear-gradient(to bottom right, rgb(55, 1, 55), rgb(4, 4, 49), rgb(84, 4, 4));
+    min-height: 100vh;
+    text-align: center;
+    font-size: calc(10px + 2vmin);
+    font-family: "Courier New";
+    color: white;
+    
+}
+form{
+    margin-bottom: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    flex-direction: horizontal;
+    align-items: center;
+    margin-top: 30px;
+}
+* {
+    box-sizing: border-box;
+  }
+  
+  /* Style the search field */
+  form.search input[type=text] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid #a894de;
+    float: left;
+    width: 80%;
+    background: #f1f1f1;
+    border-radius: 6px;
+    margin-bottom: 10px;
+  }
+  
+  /* Style the submit button */
+  form.search button {
+    float: left;
+    border-radius: 6px;
+    
+    width: 20%;
+    padding: 10px;
+    background: #a894de;
+    color: white;
+    font-size: 17px;
+    border-left: none; /* Prevent double borders */ 
+    cursor: pointer;
+  }
+  
+  form.search button:hover {
+    background: #2c2051;
+  }
+  
+  /* Clear floats */
+  form.search::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+  ul{
+    color:white
+    
+  }
