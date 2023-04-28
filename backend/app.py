@@ -42,8 +42,9 @@ headers = {}
 AUTH_URL = "https://accounts.spotify.com/authorize?" + urlencode(auth_headers)
 
 # Initialize Flask-Login
-login_manager = LoginManager()
-login_manager.init_app(app)
+
+#login_manager = LoginManager()
+#login_manager.init_app(app)
 
 
 @app.route('/', methods=['GET'])
@@ -73,8 +74,9 @@ def getTopFiveArtists():
         response = requests.get('https://api.spotify.com/v1/me/top/artists?limit=5', headers=headers)
         response_json = response.json()
         return jsonify(response_json)
-    else:
-        pass
+   else:
+       pass
+   
 
 @app.route('/callback', methods=['GET', 'POST'])
 def callback():
@@ -100,7 +102,7 @@ def callback():
         # Extract the access token from the response
         access_token = response.json()['access_token']
 
-        endpoint_url = "https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=1"
+        endpoint_url = "https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=1"
         
         # Step 3: Add headers
         headers = {
