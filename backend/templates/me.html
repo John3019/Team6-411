@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Profile</title>
+    <style>
+        .box {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px;
+            border: 2px solid black;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .box:hover {
+            background-color: lightgray;
+        }
+
+        #logout {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 10px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #search {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        #search input[type=text] {
+            padding: 10px;
+            width: 50%;
+            border-radius: 5px;
+            border: none;
+            font-size: 18px;
+            box-shadow: 0px 0px 5px lightgray;
+        }
+
+        #search input[type=submit] {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome, {{ id }}!</h1>
+
+    <div class="box">
+        <p>Song: {{ song }}</p>
+    </div>
+
+    <div class="box">
+        <p>Artist: {{ artist }}</p>
+    </div>
+
+    <div class="box">
+        <p>ChatGPT Recommendation: {{ quote }}</p>
+    </div>
+
+    <form id="search" action="/search" method="post">
+        <input type="text" placeholder="Search for a user" name="q">
+        <input type="submit" value="Search">
+    </form>
+
+    <a href="/logout">
+    <button onClick={logout} id="logout">Logout</button>
+    </a>
+
+</body>
+</html>
