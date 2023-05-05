@@ -1,7 +1,5 @@
-We chose flask for our backend and react for our frontend.
+For our project, we chose Flask for our backend and opted for plain HTML/CSS for our frontend, which allowed for smoother handling of the user state in the backend.
 
-We chose between flask and express. We chose flask because flask allowed for more seamless api calls for open.ai. Documentation for openai for express was minimal.
+In deciding between Flask and Express, we chose Flask because of its superior support for API calls to OpenAI.
 
-We chose between react and angular. We chose react because of its rendering optimizations and reusable components.
-
-We chose sqlite for our database. We chose between sqlite and mongo. We chose sqlite because of its higher reliability, especially since we have a lower volume of data.
+When it came to selecting our database, we considered both SQLite and SQL. Ultimately, we went with SQL because of our team's familiarity with it, which allowed us to work more efficiently.
