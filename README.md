@@ -1,4 +1,4 @@
-# team6-411
+# Spotify Social
 Repo for Team 6's project in CS 411
 
 This application is a fun way to view some of your current listening stats on spotify as well as stats of other users who joined the website. 
